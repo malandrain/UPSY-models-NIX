@@ -1,6 +1,7 @@
 # NIX for reproducibility with UPSY-models
 
 *Alpha version of the documentation, modifications are needed*
+e.g. **pre-commit not installed in the flake yet**
 
 ## 2 files:
 - flake.nix
