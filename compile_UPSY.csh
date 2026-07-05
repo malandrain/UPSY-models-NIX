@@ -91,6 +91,7 @@ if ($version == 'dev') then
   cmake -G Ninja -DPETSC_DIR=`brew --prefix petsc` \
     -DDO_ASSERTIONS=ON \
     -DDO_RESOURCE_TRACKING=ON \
+    -DHDF5_NO_FIND_PACKAGE_CONFIG_FILE=ON \
     -DEXTRA_Fortran_FLAGS="$cmake_flags" ..
 
 else if ($version == 'perf') then
@@ -98,6 +99,7 @@ else if ($version == 'perf') then
   cmake -G Ninja -DPETSC_DIR=`brew --prefix petsc` \
     -DDO_ASSERTIONS=OFF \
     -DDO_RESOURCE_TRACKING=OFF \
+    -DHDF5_NO_FIND_PACKAGE_CONFIG_FILE=ON \
     -DEXTRA_Fortran_FLAGS="$cmake_flags" ..
 
 endif

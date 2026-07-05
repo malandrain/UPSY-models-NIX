@@ -29,9 +29,19 @@ function(link_to_dependencies target)
   add_definitions(${PETSC_CFLAGS_OTHER})
 
   if(IS_LINUX)
-    find_package(HDF5 REQUIRED COMPONENTS C HL Fortran)
-    target_link_libraries(${target} PRIVATE ${HDF5_LIBRARIES})
-    include_directories(${HDF5_INCLUDE_DIRS})
+    if(DEFINED ENV{HDF5_ROOT})
+      include_directories($ENV{HDF5_ROOT}/include)
+      target_link_libraries(${target} PRIVATE
+        $ENV{HDF5_ROOT}/lib/libhdf5_hl_fortran.so
+        $ENV{HDF5_ROOT}/lib/libhdf5_fortran.so
+        $ENV{HDF5_ROOT}/lib/libhdf5_hl.so
+        $ENV{HDF5_ROOT}/lib/libhdf5.so
+      )
+    else()
+      find_package(HDF5 REQUIRED COMPONENTS C HL Fortran)
+      target_link_libraries(${target} PRIVATE ${HDF5_LIBRARIES})
+      include_directories(${HDF5_INCLUDE_DIRS})
+    endif()
     target_link_libraries(${target} PRIVATE ${PETSC_LIBRARIES})
   elseif(IS_MACOS)
       target_link_libraries(${target} PRIVATE ${PETSC_LIBRARY_DIRS}/libpetsc.dylib)
