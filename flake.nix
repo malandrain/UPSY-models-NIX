@@ -11,6 +11,9 @@
     devShells = forAllSystems (system:
       let
         pkgs = import nixpkgs { inherit system; };
+	cshCompat = pkgs.writeShellScriptBin "csh" ''
+		exec ${pkgs.tcsh}/bin/tcsh "$@"
+	'';
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
           numpy 
           netcdf4 
@@ -60,6 +63,7 @@
             hdf5ParallelFull
             netcdfFortranParallel
             tcsh
+	    cshCompat
             git
             wget
             coreutils
